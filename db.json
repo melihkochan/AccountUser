@@ -1,0 +1,38 @@
+{
+  "posts": [
+    {
+      "name": "Melih",
+      "surname": "KOÇHAN",
+      "money": "12",
+      "id": 1
+    },
+    {
+      "name": "5YnYP24KBJgqUzS",
+      "surname": "Melih",
+      "money": "123123",
+      "id": 2
+    },
+    {
+      "name": "5YnYP24KBJgqU",
+      "surname": "adsfd",
+      "money": "12312355",
+      "id": 3
+    },
+    {
+      "name": "5YnYP24KB",
+      "surname": "asdasd",
+      "money": "1231235512",
+      "id": 4
+    },
+    {
+      "name": "deneme",
+      "surname": "deee",
+      "money": "123123",
+      "id": 6
+    }
+  ],
+  "comments": [],
+  "profile": {
+    "name": "typicode"
+  }
+}
