@@ -1,9 +1,9 @@
 import React from "react";
-import AddUser from "./components/AddUser";
+import UserList from "./pages/user/UserList";
 function App() {
   return (
     <div>
-      <AddUser />
+      <UserList/>
     </div>
   );
 }
