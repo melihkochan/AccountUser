@@ -9,12 +9,12 @@ const UserList = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [uid, setUid] = useState(1);
 
-  const handleNameChange = (event) => {
-    setName(event.target.value);
+  const handleNameChange = (e) => {
+    setName(e.target.value);
   };
 
-  const handleSurnameChange = (event) => {
-    setSurname(event.target.value);
+  const handleSurnameChange = (e) => {
+    setSurname(e.target.value);
   };
 
   const handleAddUser = () => {
@@ -76,7 +76,7 @@ const UserList = () => {
 
         <tbody >
           {users.map((user, index) => (
-            <tr key={index}>
+            <tr key={users}>
               <td>{user.uid}</td>
               <td>{user.name}</td>
               <td>{user.surname}</td>
