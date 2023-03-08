@@ -82,8 +82,7 @@ const UserList = () => {
         </Form>
       </Modal>
 
-      <Table dataSource={text} columen
-      teyzemlere gittins={columns} style={{ marginTop: 16 }}/>
+      <Table dataSource={text} columns={columns} style={{ marginTop: 16 }}/>
     </div>
   );
 }
