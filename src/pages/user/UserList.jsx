@@ -1,94 +1,91 @@
 import React, { useState } from "react";
-import { Button, Modal, Input } from "antd";
 import "./user.css";
+import { Table, Button, Popconfirm, message, Input, Form, Space, Modal } from 'antd';
+import { v4 as uuidv4 } from 'uuid';
 
 const UserList = () => {
-  const [users, setUsers] = useState([]);
-  const [name, setName] = useState("");
-  const [surname, setSurname] = useState("");
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [uid, setUid] = useState(1);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [text, setText] = useState([]);
+  const [form] = Form.useForm();
 
-  const handleNameChange = (e) => {
-    setName(e.target.value);
-  };
-
-  const handleSurnameChange = (e) => {
-    setSurname(e.target.value);
-  };
-
-  const handleAddUser = () => {
-    const newUser = {
-      uid: uid,
-      name: name,
-      surname: surname,
+  const handleSave = (values) => {
+    const newText = {
+      id: uuidv4(),
+      ad: values.ad,
+      soyad: values.soyad,
     };
-    setUsers([...users, newUser]);
-    setName("");
-    setSurname("");
-    setUid(uid + 1);
-    setIsModalOpen(false);
+
+    setText([...text, newText]);
+    setModalVisible(false);
+    form.resetFields();
   };
 
-  const handleRemoveUser = (index) => {
-    const newUsers = users.filter((user, uid) => uid !== index);
-    setUsers(newUsers);
+  const handleDelete = (id) => {
+    setText(text.filter((txt) => txt.id !== id));
+    message.success('Metin silindi.');
   };
 
-  const showModal = () => {
-    setIsModalOpen(true);
-  };
-
-  const handleCancel = () => {
-    setIsModalOpen(false);
-  };
+  const columns = [
+    {
+      title: 'ID',
+      dataIndex: 'id',
+      key: 'id',
+    },
+    {
+      title: 'Ad',
+      dataIndex: 'ad',
+      key: 'ad',
+    },
+    {
+      title: 'Soyad',
+      dataIndex: 'soyad',
+      key: 'soyad',
+    },
+    {
+      title: 'Actions',
+      key: 'actions',
+      render: (remove) => (
+        <Space size="middle">
+          <Popconfirm
+            title="Bu metni silmek istediğinizden emin misiniz?"
+            onConfirm={() => handleDelete(remove.id) }
+          >
+            <Button >Sil</Button>
+          </Popconfirm>
+        </Space>
+      ),
+    },
+  ];
 
   return (
-    <div className="container">
-      <Button onClick={() => showModal(true)}>Ekle</Button>
-      <div>
-        <Modal
-          title="Ekleme Sayfası"
-          open={isModalOpen}
-          onOk={handleAddUser}
-          onCancel={handleCancel}
-        >
-          <div>
-            <label>Ad:</label>
-            <Input type="text" value={name} onChange={handleNameChange} />
-          </div>
-          <div>
-            <label>Soy Ad:</label>
-            <Input type="text" value={surname} onChange={handleSurnameChange} />
-          </div>
-        </Modal>
-      </div>
+    <div style={{ padding: 16  }}>
+      <Button type="primary" onClick={() => setModalVisible(true) } style={{ marginBottom: 16 }}>
+        Kullanıcı Ekle
+      </Button>
 
-      <table id="customers" style={{ marginTop: "30px" }}>
-        <thead>
-          <tr>
-            <th>id</th>
-            <th>Ad</th>
-            <th>Soy Ad</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
+      <Modal
+        title="Kullanıcı Ekleme Sayfası"
+        open={modalVisible}
+        onOk={() => form.submit()}
+        onCancel={() => {
+          setModalVisible(false);
+          form.resetFields();
+        }}
+      >
+        <Form form={form} onFinish={handleSave}>
+          <Form.Item label="Ad" name="ad" >
+            <Input />
+          </Form.Item>
+          <Form.Item label="Soyad" name="soyad" >
+            <Input />
+          </Form.Item>
+        </Form>
+      </Modal>
 
-        <tbody >
-          {users.map((user, index) => (
-            <tr key={users}>
-              <td>{user.uid}</td>
-              <td>{user.name}</td>
-              <td>{user.surname}</td>
-              <td>
-                <Button onClick={() => handleRemoveUser(index)}>Kaldır</Button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <Table dataSource={text} columen
+      teyzemlere gittins={columns} style={{ marginTop: 16 }}/>
     </div>
   );
-};
+}
 
 export default UserList;
